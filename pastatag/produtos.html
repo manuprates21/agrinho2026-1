@@ -9,7 +9,6 @@
         body { font-family: Arial; padding: 20px; margin: 0; background: #f9f9f9; }
         h2 { color: #2d5016; margin-bottom: 20px; text-align: center; }
 
-        /* Grade de Produtos */
         .grade {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -38,7 +37,6 @@
         .produto h3 { margin: 10px 0; color: #333; font-size: 18px; }
         .produto p { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #2d5016; }
 
-        /* Botões com interação */
         button {
             background-color: #2d5016;
             color: white;
@@ -54,7 +52,6 @@
         button:hover { background-color: #234010; transform: scale(1.03); }
         button:active { transform: scale(0.98); }
 
-        /* Carrinho */
         .carrinho {
             background: white;
             border: 2px solid #2d5016;
@@ -81,7 +78,6 @@
         }
         .acoes-carrinho { display: flex; gap: 10px; margin-top: 20px; }
 
-        /* Pagamento */
         .pagamento {
             margin-top: 30px;
             padding: 20px;
@@ -120,47 +116,36 @@
 <body>
     <h2>Nossos Produtos</h2>
     <div class="grade">
-        <!-- Produto 1 -->
         <div class="produto">
             <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400" alt="Drone Agrícola">
             <h3>Drone Agrícola</h3>
             <p>R$ 85.000,00</p>
             <button onclick="adicionarAoCarrinho('Drone Agrícola', 85000)">Adicionar ao Carrinho</button>
         </div>
-
-        <!-- Produto 2 -->
         <div class="produto">
             <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400" alt="Sensor de Solo">
             <h3>Sensor de Solo</h3>
             <p>R$ 1.200,00</p>
             <button onclick="adicionarAoCarrinho('Sensor de Solo', 1200)">Adicionar ao Carrinho</button>
         </div>
-
-        <!-- Produto 3 -->
         <div class="produto">
             <img src="https://images.unsplash.com/photo-1607848420416-b8d748477472?w=400" alt="GPS para Trator">
             <h3>GPS para Trator</h3>
             <p>R$ 15.000,00</p>
             <button onclick="adicionarAoCarrinho('GPS para Trator', 15000)">Adicionar ao Carrinho</button>
         </div>
-
-        <!-- Produto 4 -->
         <div class="produto">
             <img src="https://images.unsplash.com/photo-1593006684388-662138b26d49?w=400" alt="Irrigação Automática">
             <h3>Irrigação Automática</h3>
             <p>R$ 22.500,00</p>
             <button onclick="adicionarAoCarrinho('Irrigação Automática', 22500)">Adicionar ao Carrinho</button>
         </div>
-
-        <!-- Produto 5 -->
         <div class="produto">
             <img src="https://images.unsplash.com/photo-1611262564517-679a4227a188?w=400" alt="Balança Digital">
             <h3>Balança Digital</h3>
             <p>R$ 3.800,00</p>
             <button onclick="adicionarAoCarrinho('Balança Digital', 3800)">Adicionar ao Carrinho</button>
         </div>
-
-        <!-- Produto 6 -->
         <div class="produto">
             <img src="https://images.unsplash.com/photo-1623206837956-07dab2113809?w=400" alt="Estufa Inteligente">
             <h3>Estufa Inteligente</h3>
@@ -169,7 +154,6 @@
         </div>
     </div>
 
-    <!-- CARRINHO -->
     <div class="carrinho">
         <h3>🛒 Seu Carrinho</h3>
         <div id="listaCarrinho"></div>
@@ -179,7 +163,6 @@
         </div>
     </div>
 
-    <!-- PAGAMENTO -->
     <div class="pagamento">
         <h3>💳 Formas de Pagamento</h3>
         <div class="opcoes-pagamento">
@@ -193,11 +176,9 @@
     </div>
 
     <script>
-        // Carrinho com quantidade e soma
         let carrinho = [];
 
         function adicionarAoCarrinho(nome, preco) {
-            // Verifica se o produto já existe para só aumentar a quantidade
             const itemExistente = carrinho.find(item => item.nome === nome);
             if (itemExistente) {
                 itemExistente.quantidade += 1;
@@ -205,7 +186,7 @@
                 carrinho.push({ nome, preco, quantidade: 1 });
             }
             atualizarCarrinho();
-            alert(`✅ ${nome} adicionado!`);
+            alert("✅ " + nome + " adicionado!");
         }
 
         function atualizarCarrinho() {
@@ -223,13 +204,13 @@
                 div.innerHTML = `
                     <span>${item.nome}</span>
                     <span class="quantidade">Qtd: ${item.quantidade}</span>
-                    <span>R$ ${(item.preco * item.quantidade).toLocaleString('pt-BR', {minimumFractionDigits:2})}</span>
+                    <span>R$ ${(item.preco * item.quantidade).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
                 `;
                 lista.appendChild(div);
             });
 
             document.getElementById('qtdTotal').textContent = qtdTotal;
-            document.getElementById('valorTotal').textContent = valorTotal.toLocaleString('pt-BR', {minimumFractionDigits:2});
+            document.getElementById('valorTotal').textContent = valorTotal.toLocaleString('pt-BR', {minimumFractionDigits: 2});
         }
 
         function limparCarrinho() {
@@ -239,11 +220,10 @@
             document.querySelectorAll('.opcao').forEach(op => op.classList.remove('selecionada'));
         }
 
-        // Pagamento
         function selecionarPagamento(elemento) {
             document.querySelectorAll('.opcao').forEach(op => op.classList.remove('selecionada'));
             elemento.classList.add('selecionada');
-            document.getElementById('pagamentoEscolhido').textContent = `Forma escolhida: ${elemento.textContent}`;
+            document.getElementById('pagamentoEscolhido').textContent = "Forma escolhida: " + elemento.textContent;
         }
 
         function finalizarCompra() {
@@ -259,7 +239,7 @@
             const totalGeral = carrinho.reduce((soma, item) => soma + (item.preco * item.quantidade), 0);
             const qtdGeral = carrinho.reduce((soma, item) => soma + item.quantidade, 0);
 
-            alert(`🎉 Compra finalizada!\nQuantidade: ${qtdGeral}\nTotal: R$ ${totalGeral.toLocaleString('pt-BR', {minimumFractionDigits:2})}\nPagamento: ${forma.textContent}`);
+            alert("🎉 Compra finalizada!\nQuantidade: " + qtdGeral + "\nTotal: R$ " + totalGeral.toLocaleString('pt-BR', {minimumFractionDigits: 2}) + "\nPagamento: " + forma.textContent);
             limparCarrinho();
         }
     </script>
