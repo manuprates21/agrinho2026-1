@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial; padding: 20px; margin: 0; }
+        h2 { color: #2d5016; margin-bottom: 20px; }
+        .grade {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .grade img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        .grade img:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <h2 style="color:#2d5016;">Galeria</h2>
+    <div class="grade">
+        <img src="https://images.unsplash.com/photo-1589927909116-35258557b748?q=80&w=400" alt="Tecnologia no campo">
+        <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=400" alt="Equipamento agrícola">
+        <img src="https://images.unsplash.com/photo-1607848477472-3b8236943c01?q=80&w=400" alt="Agricultura moderna">
+        <img src="https://images.unsplash.com/photo-1625246340530-910d44c86f9f?q=80&w=400" alt="Drones na lavoura">
+        <img src="https://images.unsplash.com/photo-1598300042247-088f8fab3a91?q=80&w=400" alt="Sensores de campo">
+        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=400" alt="Campo tecnológico">
+    </div>
+</body>
+</html>
