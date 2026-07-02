@@ -1,24 +1,68 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <head> 
-        <meta charset="UTF-8">
-        <META name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>TEC-AGROCAMP</title>
-            <style>
-                * { margin: 0; padding: 0; box-sizing: border-box;}
-                 body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEC-AGROCAMP | Tecnologia no Campo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
+        :focus-visible { outline: 3px solid #1a300c; outline-offset: 2px; }
+
+        :root {
+            --cor-fundo: #f5f5f5;
+            --cor-texto: #222;
+            --cor-destaque: #2d5016;
+            --cor-branco: #ffffff;
+            --cor-borda: #ccc;
+            --cor-sombra: rgba(0,0,0,0.1);
         }
+
+        .modo-escuro {
+            --cor-fundo: #121212;
+            --cor-texto: #f0f0f0;
+            --cor-destaque: #4a7c2c;
+            --cor-branco: #1e1e1e;
+            --cor-borda: #444;
+            --cor-sombra: rgba(255,255,255,0.05);
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            line-height: 1.6;
+        }
+
         header {
-            background-color: #2d5016;
+            background-color: var(--cor-destaque);
             color: white;
             text-align: center;
             padding: 25px;
+            position: relative; /* ESSENCIAL para o botão ficar no canto */
         }
-        header h1 { font-size: 32px; }
+
+        /* ESTILO DO BOTÃO (GARANTIDO PARA APARECER) */
+        #botao-tema {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: rgba(255,255,255,0.25);
+            border: none;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: background 0.3s;
+            z-index: 999; /* Fica por cima de tudo */
+        }
+        #botao-tema:hover { background: rgba(255,255,255,0.4); }
+
+        header h1 { font-size: 2rem; margin-bottom: 10px; }
         nav {
-            background-color: #2d5016;
+            background-color: var(--cor-destaque);
             display: flex;
             justify-content: center;
             gap: 10px;
@@ -29,8 +73,8 @@
             background: transparent;
             color: white;
             border: none;
-            padding: 12px 20px;
-            font-size: 16px;
+            padding: 12px 28px;
+            font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
             border-radius: 6px;
@@ -41,9 +85,10 @@
         main {
             max-width: 1100px;
             margin: 20px auto;
-            background: white;
+            background: var(--cor-branco);
             border-radius: 8px;
             overflow: hidden;
+            box-shadow: 0 2px 8px var(--cor-sombra);
         }
         iframe {
             width: 100%;
@@ -51,37 +96,80 @@
             border: none;
             display: block;
         }
+        .sr-only {
+            position: absolute;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0,0,0,0);
+            white-space: nowrap; border: 0;
+        }
     </style>
-    <link rel="stylesheet" 
-    href="acessibilidade.css">
 </head>
 <body>
-    <header><h1><button id="botao-tema" onclick="alternarTema()" aria-label="Alternar entre modo claro e escuro">🌓 Tema</button>TEC-AGROCAMP</h1></header>
+    <header>
+        <h1 id="titulo-principal">TEC-AGROCAMP</h1>
+        <!-- AQUI ESTÁ O BOTÃO, CERTO E VISÍVEL -->
+        <button id="botao-tema" onclick="alternarTema()" aria-label="Alternar entre modo claro e escuro">🌓 Mudar Tema</button>
+        <p class="sr-only">Tecnologia no campo: inteligência que protege a natureza e alimenta o amanhã</p>
+    </header>
 
-    <nav>
-        <button onclick="trocarAba('inicio')" class="ativo">Início</button>
+    <nav aria-label="Navegação principal">
+        <button onclick="trocarAba('inicio')" class="ativo" aria-current="page">Início</button>
         <button onclick="trocarAba('importancia')">Importância</button>
         <button onclick="trocarAba('produtos')">Produtos</button>
-        <button onclick="trocarAba('porque')">Por que</button>
+        <button onclick="trocarAba('porque')">Por quê</button>
         <button onclick="trocarAba('galeria')">Galeria</button>
     </nav>
 
     <main>
-        <!-- ESSENCIAL: iframe que carrega as páginas -->
-        <iframe id="tela" src="inicio.html"></iframe>
+        <iframe 
+            id="tela" 
+            src="inicio.html" 
+            title="Conteúdo da página selecionada"
+            aria-describedby="desc-iframe">
+        </iframe>
+        <p id="desc-iframe" class="sr-only">Área onde é exibido o conteúdo da página escolhida no menu</p>
     </main>
 
     <script>
-        function trocarAba(pagina) {
-            // Carrega a página correta
-            document.getElementById('tela').src = pagina + '.html';
-            
-            // Remove classe ativo de todos os botões
-            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('ativo'));
-            
-            // Adiciona classe ativo no botão clicado
-            event.currentTarget.classList.add('ativo');
+        function trocarAba(pagina){
+            document.getElementById("tela").src = pagina + ".html";
+            document.querySelectorAll("nav button").forEach(btn => {
+                btn.removeAttribute("aria-current");
+                btn.classList.remove("ativo");
+            });
+            event.currentTarget.setAttribute("aria-current", "page");
+            event.currentTarget.classList.add("ativo");
+            document.title = `TEC-AGROCAMP | ${pagina.charAt(0).toUpperCase() + pagina.slice(1)}`;
         }
+
+        function aplicarTema(tema) {
+            if (tema === 'escuro') {
+                document.body.classList.add('modo-escuro');
+            } else {
+                document.body.classList.remove('modo-escuro');
+            }
+            localStorage.setItem('temaEscolhido', tema);
+            const iframe = document.getElementById('tela');
+            iframe.onload = () => {
+                iframe.contentWindow.postMessage({tema: tema}, '*');
+            };
+        }
+
+        function alternarTema() {
+            const temaAtual = document.body.classList.contains('modo-escuro') ? 'claro' : 'escuro';
+            aplicarTema(temaAtual);
+        }
+
+        const temaSalvo = localStorage.getItem('temaEscolhido') || 'claro';
+        aplicarTema(temaSalvo);
+
+        window.addEventListener('message', (e) => {
+            if (e.data && e.data.solicitarTema) {
+                const temaAtual = document.body.classList.contains('modo-escuro') ? 'escuro' : 'claro';
+                e.source.postMessage({tema: temaAtual}, '*');
+            }
+        });
     </script>
 </body>
 </html>
