@@ -219,7 +219,7 @@
                 alert("Escolha uma forma de pagamento!");
                 return;
             }
-            alert(Compra finalizada!\nTotal: R$ ${totalGeral.toLocaleString('pt-BR', {minimumFractionDigits:2})}\nPagamento: ${forma.textContent});
+            alert(`Compra finalizada!\nTotal: R$ ${totalGeral.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\nPagamento: ${forma.textContent}`);
             limparCarrinho();
         }
     </script>
