@@ -183,7 +183,7 @@
             if (itemExistente) {
                 itemExistente.quantidade += 1;
             } else {
-                carrinho.push({ nome, preco, quantidade: 1 });
+                carrinho.push({ nome: nome, preco: preco, quantidade: 1 });
             }
             atualizarCarrinho();
             alert("✅ " + nome + " adicionado!");
@@ -195,17 +195,13 @@
             let qtdTotal = 0;
             let valorTotal = 0;
 
-            carrinho.forEach(item => {
+            carrinho.forEach(function(item) {
                 qtdTotal += item.quantidade;
                 valorTotal += item.preco * item.quantidade;
 
                 const div = document.createElement('div');
                 div.className = 'item-carrinho';
-                div.innerHTML = `
-                    <span>${item.nome}</span>
-                    <span class="quantidade">Qtd: ${item.quantidade}</span>
-                    <span>R$ ${(item.preco * item.quantidade).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
-                `;
+                div.innerHTML = '<span>' + item.nome + '</span><span class="quantidade">Qtd: ' + item.quantidade + '</span><span>R$ ' + (item.preco * item.quantidade).toLocaleString('pt-BR', {minimumFractionDigits: 2}) + '</span>';
                 lista.appendChild(div);
             });
 
@@ -217,11 +213,17 @@
             carrinho = [];
             atualizarCarrinho();
             document.getElementById('pagamentoEscolhido').textContent = '';
-            document.querySelectorAll('.opcao').forEach(op => op.classList.remove('selecionada'));
+            const opcoes = document.querySelectorAll('.opcao');
+            opcoes.forEach(function(op) {
+                op.classList.remove('selecionada');
+            });
         }
 
         function selecionarPagamento(elemento) {
-            document.querySelectorAll('.opcao').forEach(op => op.classList.remove('selecionada'));
+            const opcoes = document.querySelectorAll('.opcao');
+            opcoes.forEach(function(op) {
+                op.classList.remove('selecionada');
+            });
             elemento.classList.add('selecionada');
             document.getElementById('pagamentoEscolhido').textContent = "Forma escolhida: " + elemento.textContent;
         }
@@ -236,8 +238,12 @@
                 alert("❌ Escolha uma forma de pagamento!");
                 return;
             }
-            const totalGeral = carrinho.reduce((soma, item) => soma + (item.preco * item.quantidade), 0);
-            const qtdGeral = carrinho.reduce((soma, item) => soma + item.quantidade, 0);
+            let totalGeral = 0;
+            let qtdGeral = 0;
+            carrinho.forEach(function(item) {
+                totalGeral += item.preco * item.quantidade;
+                qtdGeral += item.quantidade;
+            });
 
             alert("🎉 Compra finalizada!\nQuantidade: " + qtdGeral + "\nTotal: R$ " + totalGeral.toLocaleString('pt-BR', {minimumFractionDigits: 2}) + "\nPagamento: " + forma.textContent);
             limparCarrinho();
