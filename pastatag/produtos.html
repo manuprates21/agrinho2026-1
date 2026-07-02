@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtos - TEC-AGROCAMP</title>
     <style>
+        * { box-sizing: border-box; }
         body { font-family: Arial; padding: 20px; margin: 0; background: #f9f9f9; }
-        h2 { color: #2d5016; margin-bottom: 20px; }
+        h2 { color: #2d5016; margin-bottom: 20px; text-align: center; }
+
+        /* Grade de Produtos */
         .grade {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -19,6 +22,11 @@
             border-radius: 8px;
             text-align: center;
             background: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .produto:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(45, 80, 22, 0.2);
         }
         .produto img {
             width: 100px;
@@ -27,22 +35,26 @@
             margin-bottom: 10px;
             border-radius: 4px;
         }
-        .produto h3 { margin: 10px 0; color: #333; }
+        .produto h3 { margin: 10px 0; color: #333; font-size: 18px; }
         .produto p { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #2d5016; }
+
+        /* Botões com interação */
         button {
             background-color: #2d5016;
             color: white;
             border: none;
-            padding: 10px;
+            padding: 12px;
             width: 100%;
             border-radius: 6px;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.2s;
         }
-        button:hover { background-color: #234010; }
+        button:hover { background-color: #234010; transform: scale(1.03); }
+        button:active { transform: scale(0.98); }
 
-        /* Estilo do Carrinho */
+        /* Carrinho */
         .carrinho {
             background: white;
             border: 2px solid #2d5016;
@@ -50,57 +62,70 @@
             padding: 20px;
             margin-top: 30px;
         }
-        .carrinho h3 { color: #2d5016; margin-top: 0; }
+        .carrinho h3 { color: #2d5016; margin-top: 0; text-align: center; font-size: 22px; }
         .item-carrinho {
             display: flex;
             justify-content: space-between;
-            padding: 8px 0;
+            align-items: center;
+            padding: 10px 0;
             border-bottom: 1px solid #eee;
+            font-size: 16px;
         }
+        .quantidade { font-weight: bold; color: #2d5016; }
         .total {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             color: #2d5016;
             margin-top: 15px;
             text-align: right;
         }
+        .acoes-carrinho { display: flex; gap: 10px; margin-top: 20px; }
 
-        /* Formas de Pagamento */
+        /* Pagamento */
         .pagamento {
             margin-top: 30px;
             padding: 20px;
             background: white;
             border-radius: 8px;
         }
-        .pagamento h3 { color: #2d5016; }
+        .pagamento h3 { color: #2d5016; text-align: center; }
         .opcoes-pagamento {
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
-            margin-top: 10px;
+            justify-content: center;
+            margin-top: 15px;
         }
         .opcao {
-            padding: 10px 20px;
-            border: 1px solid #2d5016;
+            padding: 12px 25px;
+            border: 2px solid #2d5016;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s;
+            font-weight: bold;
         }
         .opcao:hover, .opcao.selecionada {
             background: #2d5016;
             color: white;
         }
+        #pagamentoEscolhido {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #2d5016;
+            text-align: center;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
-    <h2>Produtos</h2>
+    <h2>Nossos Produtos</h2>
     <div class="grade">
         <!-- Produto 1 -->
         <div class="produto">
             <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400" alt="Drone Agrícola">
             <h3>Drone Agrícola</h3>
             <p>R$ 85.000,00</p>
-            <button onclick="adicionarAoCarrinho('Drone Agrícola', 85000)">Adicionar</button>
+            <button onclick="adicionarAoCarrinho('Drone Agrícola', 85000)">Adicionar ao Carrinho</button>
         </div>
 
         <!-- Produto 2 -->
@@ -108,7 +133,7 @@
             <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400" alt="Sensor de Solo">
             <h3>Sensor de Solo</h3>
             <p>R$ 1.200,00</p>
-            <button onclick="adicionarAoCarrinho('Sensor de Solo', 1200)">Adicionar</button>
+            <button onclick="adicionarAoCarrinho('Sensor de Solo', 1200)">Adicionar ao Carrinho</button>
         </div>
 
         <!-- Produto 3 -->
@@ -116,87 +141,99 @@
             <img src="https://images.unsplash.com/photo-1607848420416-b8d748477472?w=400" alt="GPS para Trator">
             <h3>GPS para Trator</h3>
             <p>R$ 15.000,00</p>
-            <button onclick="adicionarAoCarrinho('GPS para Trator', 15000)">Adicionar</button>
+            <button onclick="adicionarAoCarrinho('GPS para Trator', 15000)">Adicionar ao Carrinho</button>
         </div>
 
-        <!-- NOVO Produto 4 -->
+        <!-- Produto 4 -->
         <div class="produto">
             <img src="https://images.unsplash.com/photo-1593006684388-662138b26d49?w=400" alt="Irrigação Automática">
             <h3>Irrigação Automática</h3>
             <p>R$ 22.500,00</p>
-            <button onclick="adicionarAoCarrinho('Irrigação Automática', 22500)">Adicionar</button>
+            <button onclick="adicionarAoCarrinho('Irrigação Automática', 22500)">Adicionar ao Carrinho</button>
         </div>
 
-        <!-- NOVO Produto 5 -->
+        <!-- Produto 5 -->
         <div class="produto">
             <img src="https://images.unsplash.com/photo-1611262564517-679a4227a188?w=400" alt="Balança Digital">
             <h3>Balança Digital</h3>
             <p>R$ 3.800,00</p>
-            <button onclick="adicionarAoCarrinho('Balança Digital', 3800)">Adicionar</button>
+            <button onclick="adicionarAoCarrinho('Balança Digital', 3800)">Adicionar ao Carrinho</button>
         </div>
 
-        <!-- NOVO Produto 6 -->
+        <!-- Produto 6 -->
         <div class="produto">
             <img src="https://images.unsplash.com/photo-1623206837956-07dab2113809?w=400" alt="Estufa Inteligente">
             <h3>Estufa Inteligente</h3>
             <p>R$ 45.000,00</p>
-            <button onclick="adicionarAoCarrinho('Estufa Inteligente', 45000)">Adicionar</button>
+            <button onclick="adicionarAoCarrinho('Estufa Inteligente', 45000)">Adicionar ao Carrinho</button>
         </div>
     </div>
 
-    <!-- CARRINHO DE COMPRAS -->
+    <!-- CARRINHO -->
     <div class="carrinho">
         <h3>🛒 Seu Carrinho</h3>
         <div id="listaCarrinho"></div>
-        <div class="total">Total: R$ <span id="valorTotal">0,00</span></div>
-        <br>
-        <button onclick="limparCarrinho()">Limpar Carrinho</button>
+        <div class="total">Quantidade total: <span id="qtdTotal">0</span> | Valor Total: R$ <span id="valorTotal">0,00</span></div>
+        <div class="acoes-carrinho">
+            <button onclick="limparCarrinho()" style="background:#8b0000;">Limpar Carrinho</button>
+        </div>
     </div>
 
-    <!-- FORMAS DE PAGAMENTO -->
+    <!-- PAGAMENTO -->
     <div class="pagamento">
         <h3>💳 Formas de Pagamento</h3>
         <div class="opcoes-pagamento">
             <div class="opcao" onclick="selecionarPagamento(this)">Cartão de Crédito</div>
             <div class="opcao" onclick="selecionarPagamento(this)">Boleto Bancário</div>
             <div class="opcao" onclick="selecionarPagamento(this)">Pix</div>
-            <div class="opcao" onclick="selecionarPagamento(this)">Transferência Bancária</div>
+            <div class="opcao" onclick="selecionarPagamento(this)">Transferência</div>
         </div>
-        <p id="pagamentoEscolhido" style="margin-top:15px; font-weight:bold; color:#2d5016;"></p>
-        <br>
-        <button onclick="finalizarCompra()">Finalizar Compra</button>
+        <p id="pagamentoEscolhido"></p>
+        <button onclick="finalizarCompra()" style="margin-top:20px; max-width:300px; margin-left:auto; margin-right:auto; display:block;">Finalizar Compra</button>
     </div>
 
     <script>
-        // Carrinho
+        // Carrinho com quantidade e soma
         let carrinho = [];
-        let totalGeral = 0;
 
         function adicionarAoCarrinho(nome, preco) {
-            carrinho.push({nome, preco});
-            totalGeral += preco;
+            // Verifica se o produto já existe para só aumentar a quantidade
+            const itemExistente = carrinho.find(item => item.nome === nome);
+            if (itemExistente) {
+                itemExistente.quantidade += 1;
+            } else {
+                carrinho.push({ nome, preco, quantidade: 1 });
+            }
             atualizarCarrinho();
-            alert(nome + " adicionado ao carrinho!");
+            alert(`✅ ${nome} adicionado!`);
         }
 
         function atualizarCarrinho() {
             const lista = document.getElementById('listaCarrinho');
             lista.innerHTML = '';
-            carrinho.forEach((item, index) => {
+            let qtdTotal = 0;
+            let valorTotal = 0;
+
+            carrinho.forEach(item => {
+                qtdTotal += item.quantidade;
+                valorTotal += item.preco * item.quantidade;
+
                 const div = document.createElement('div');
                 div.className = 'item-carrinho';
                 div.innerHTML = `
-                    <span>${index+1}. ${item.nome}</span>
-                    <span>R$ ${item.preco.toLocaleString('pt-BR', {minimumFractionDigits:2})}</span>
+                    <span>${item.nome}</span>
+                    <span class="quantidade">Qtd: ${item.quantidade}</span>
+                    <span>R$ ${(item.preco * item.quantidade).toLocaleString('pt-BR', {minimumFractionDigits:2})}</span>
                 `;
                 lista.appendChild(div);
             });
-            document.getElementById('valorTotal').textContent = totalGeral.toLocaleString('pt-BR', {minimumFractionDigits:2});
+
+            document.getElementById('qtdTotal').textContent = qtdTotal;
+            document.getElementById('valorTotal').textContent = valorTotal.toLocaleString('pt-BR', {minimumFractionDigits:2});
         }
 
         function limparCarrinho() {
             carrinho = [];
-            totalGeral = 0;
             atualizarCarrinho();
             document.getElementById('pagamentoEscolhido').textContent = '';
             document.querySelectorAll('.opcao').forEach(op => op.classList.remove('selecionada'));
@@ -206,20 +243,23 @@
         function selecionarPagamento(elemento) {
             document.querySelectorAll('.opcao').forEach(op => op.classList.remove('selecionada'));
             elemento.classList.add('selecionada');
-            document.getElementById('pagamentoEscolhido').textContent = "Forma escolhida: " + elemento.textContent;
+            document.getElementById('pagamentoEscolhido').textContent = `Forma escolhida: ${elemento.textContent}`;
         }
 
         function finalizarCompra() {
-            if(carrinho.length === 0) {
-                alert("Seu carrinho está vazio! Adicione produtos primeiro.");
+            if (carrinho.length === 0) {
+                alert("❌ Seu carrinho está vazio!");
                 return;
             }
             const forma = document.querySelector('.opcao.selecionada');
-            if(!forma) {
-                alert("Escolha uma forma de pagamento!");
+            if (!forma) {
+                alert("❌ Escolha uma forma de pagamento!");
                 return;
             }
-            alert(`Compra finalizada!\nTotal: R$ ${totalGeral.toLocaleString('pt-BR', {minimumFractionDigits: 2})}\nPagamento: ${forma.textContent}`);
+            const totalGeral = carrinho.reduce((soma, item) => soma + (item.preco * item.quantidade), 0);
+            const qtdGeral = carrinho.reduce((soma, item) => soma + item.quantidade, 0);
+
+            alert(`🎉 Compra finalizada!\nQuantidade: ${qtdGeral}\nTotal: R$ ${totalGeral.toLocaleString('pt-BR', {minimumFractionDigits:2})}\nPagamento: ${forma.textContent}`);
             limparCarrinho();
         }
     </script>
