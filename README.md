@@ -1,1 +1,5 @@
 # agrinho2026
+esse site foi desenvolvido para o PROJETO AGRINHO 2026, com o tema 'tecnologia no campo: a inteligência protege a naturez e alimenta o amanhã.
+Nosso objetivo é mostrar como a tecnologia e a inovação transformam a agricultura: aumentam a produtividade de forma sustentável; reduzem o desperdicio de recursos naturais; conectam o campo á cidade, valorizando o produtor rural; apresentam soluções que equilibram produção e preservação ambiental.
+tecnologia usada: html5 (estrutura de todas as páginas e conteúdo do site) css( estilos, layout, responsavidade e modo escuro/claro) javaScript (funcionlidades interativas: alternância de tema, navegação).
+instruções de uso: acessar o site, navegação: menu superior(clique em inicio, importancia, produtos, porque, galeria para acessar cada seção) alterar tema( clique no botão 'mudar tema' no canto superior que tera modo claro ou escuro, sua preferencia de tema é salva automaticamente).  
